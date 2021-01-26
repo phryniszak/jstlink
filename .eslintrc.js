@@ -32,8 +32,5 @@ module.exports = {
     },
     "globals": {
         "debug": "writable",
-        "Terminal": "readonly",
-        "FitAddon": "readonly",
-        "mcu": "readonly"
     }
 };
