@@ -10,7 +10,11 @@ export class Terminal extends EventTarget {
         super();
         this.el = el;
         this.echofn = null;
-        this.el.onkeydown = (ev) => this.onKey(ev.key);
+        this.el.onkeydown = (ev) => {
+            this.onKey(ev.key);
+            ev.preventDefault(); 
+        };
+        this.el.keyup = (ev) => ev.preventDefault(); 
     }
 
     getASCIIfromKey(key) {

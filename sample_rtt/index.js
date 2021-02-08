@@ -46,6 +46,9 @@ const initUI = () => {
 
     resize();
     updateUI();
+    
+    // Caution: I am telling you this as a friend. It exists. It is a thing, but it is a hack. Please don't use it
+    window.scrollTo(0,1);
 };
 
 const updateUI = async () => {
@@ -79,7 +82,7 @@ const runRTT = async () => {
     if (rttRunning) {
         return;
     }
-
+    
     rttRunning = true;
 
     await rtt.find();
