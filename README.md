@@ -2,7 +2,7 @@
 STLink V3/V2 library using WebUSB
 
 # RTT
-Demo application using Segger RTT library:
+Demo application using Segger RTT protocol:
 
 https://phryniszak.github.io/jstlink/sample_rtt/
 
