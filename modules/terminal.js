@@ -61,14 +61,17 @@ export class Terminal extends EventTarget {
         switch (ascii) {
             case 13:
                 printel.after(document.createElement("p"));
-                this.el.scrollTop = this.el.scrollHeight;
+                break;
+            case 32:
+                printel.innerText += "\u00a0";
                 break;
 
             default:
                 printel.innerText += String.fromCharCode(ascii);
-                if (this.el.scrollTop != this.el.scrollHeight) {
-                    this.el.scrollTop = this.el.scrollHeight;
-                }
+        }
+
+        if (this.el.scrollTop != this.el.scrollHeight) {
+            this.el.scrollTop = this.el.scrollHeight;
         }
 
         // TODO:
@@ -98,13 +101,14 @@ export class Terminal extends EventTarget {
         const printel = this.el.children[this.el.childElementCount - 2];
         const data_type = typeof data;
 
-        if (data_type === "string") {
-            printel.innerText += data;
-        }
-        else if (data instanceof Array) {
+        if (data instanceof Uint8Array) {
             printel.innerText += this._ASCIIdecoderArr(data);
+        } else if (data instanceof Array) {
+            printel.innerText += this._ASCIIdecoderArr(data);
+        } else if (data_type === "string") {
+            printel.innerText += data;
         } else {
-            logger("unknown type", data_type);
+            console.log("unknown type", data_type);
         }
 
         if (this.el.scrollTop != this.el.scrollHeight) {
@@ -119,7 +123,11 @@ export class Terminal extends EventTarget {
             if (char == 0) {
                 return str;
             }
-            str += String.fromCharCode(char);
+            if (char == 32) {
+                str += "\u00a0";
+            } else {
+                str += String.fromCharCode(char);
+            }
         }
         // it shouldn't happen, string ending not found 
         return str;
