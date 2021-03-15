@@ -6,9 +6,10 @@ const logger = debug("stlink:terminal");
 
 export class Terminal extends EventTarget {
 
-    constructor(el) {
+    constructor(el, maxChars) {
         super();
         this.el = el;
+        this.maxChars = maxChars || 1000;
         this.echofn = null;
         this.el.onkeydown = (ev) => {
             this.onKey(ev.key);
@@ -26,8 +27,8 @@ export class Terminal extends EventTarget {
         switch (key) {
             case "Enter":
                 return 13;
-            case "Backspace":
-                return 8;
+            // case "Backspace":
+            //     return 8;
             case "Tab":
                 return 9;
         }
@@ -59,9 +60,9 @@ export class Terminal extends EventTarget {
         let printel = this.el.children[this.el.childElementCount - 2];
 
         switch (ascii) {
-            case 13:
-                printel.after(document.createElement("p"));
-                break;
+            // case 13:
+            //     printel.after(document.createElement("p"));
+            //     break;
             case 32:
                 printel.innerText += "\u00a0";
                 break;
@@ -99,16 +100,21 @@ export class Terminal extends EventTarget {
     _innerWrite(data) {
 
         const printel = this.el.children[this.el.childElementCount - 2];
-        const data_type = typeof data;
 
-        if (data instanceof Uint8Array) {
-            printel.innerText += this._ASCIIdecoderArr(data);
-        } else if (data instanceof Array) {
-            printel.innerText += this._ASCIIdecoderArr(data);
-        } else if (data_type === "string") {
-            printel.innerText += data;
+        if (data instanceof Uint8Array || data instanceof Array) {
+            data = this._ASCIIdecoderArr(data);
+        } else if (typeof data !== "string") {
+            console.log("unknown type", typeof data);
+            return;
+        }
+
+        // if data > max
+        if (data.length > this.maxChars) {
+            printel.innerText = data.substring(data.length - this.maxChars);
+        } else if (printel.innerText.length + data.length > this.maxChars) {
+            printel.innerText = printel.innerText.substring(printel.innerText.length - this.maxChars + data.length) + data;
         } else {
-            console.log("unknown type", data_type);
+            printel.innerText += data;
         }
 
         if (this.el.scrollTop != this.el.scrollHeight) {
