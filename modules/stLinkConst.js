@@ -259,7 +259,11 @@ const PRODUCTS = {
     "374A": "ST-Link v2-1A",
     "374B": "ST-Link v2-1B",
     "374E": "ST-Link v3-E",
-    "374F": "ST-Link v3"
+    "374F": "ST-Link v3",
+    "3753": "ST-Link v3-?",
+    "3754": "ST-Link v3-Emb",
+    "3755": "ST-Link v3-?",
+    "3757": "ST-Link v3-?"
 };
 
 const JTAGFrequencies = {
