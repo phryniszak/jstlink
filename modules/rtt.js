@@ -53,8 +53,8 @@ const find = async (options) => {
     Array.prototype.map.call("SEGGER RTT", (letter, index) => segger_rtt_str.setUint8(index, letter.charCodeAt(0)));
 
     for (let index = 0; index < (mem.byteLength - 16); index++) {
-        if ((segger_rtt_str.getUint32(0, true) == mem.getUint32(index, true))
-            && (segger_rtt_str.getUint32(4, true) == mem.getUint32(index + 4, true))) {
+        if ((segger_rtt_str.getBigUint64(0, true) == mem.getBigUint64(index, true))
+            && (segger_rtt_str.getBigUint64(8, true) == mem.getBigUint64(index + 8, true))) {
             status.address = index;
             logger("SEGGER RTT found");
             break;

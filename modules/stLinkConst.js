@@ -260,8 +260,8 @@ const PRODUCTS = {
     "374B": "ST-Link v2-1B",
     "374E": "ST-Link v3-E",
     "374F": "ST-Link v3",
-    "3753": "ST-Link v3-?",
-    "3754": "ST-Link v3-Emb",
+    "3753": "ST-Link v3-2VCP",
+    "3754": "ST-Link v3-NO-MSD",
     "3755": "ST-Link v3-?",
     "3757": "ST-Link v3-?"
 };
